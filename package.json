@@ -1,0 +1,39 @@
+{
+	"name": "slack-police",
+	"version": "1.0.0",
+	"description": "Self-hosted Slack profile-compliance bot",
+	"type": "module",
+	"license": "MIT",
+	"engines": {
+		"node": ">=24"
+	},
+	"bin": {
+		"slack-police": "dist/bin.js"
+	},
+	"scripts": {
+		"build": "tsc -p tsconfig.build.json",
+		"typecheck": "tsc --noEmit",
+		"lint": "biome check .",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@slack/bolt": "^5.1.0",
+		"@slack/web-api": "^8.3.0",
+		"better-sqlite3": "^13.1.1",
+		"croner": "^11.0.0",
+		"libphonenumber-js": "^1.13.16",
+		"pino": "^10.4.0",
+		"yaml": "^2.9.1",
+		"zod": "^4.6.7"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.6.7",
+		"@types/better-sqlite3": "^9.6.0",
+		"@types/node": "^26.6.6",
+		"typescript": "^7.0.2",
+		"vitest": "^5.1.0"
+	},
+	"allowScripts": {
+		"better-sqlite3@13.1.1": true
+	}
+}
