@@ -1,0 +1,47 @@
+dry_run: true                    # log + admin summary only; no DMs to people. Set false when happy.
+
+schedule:
+  check: "0 * * * 1-5"           # cron for check passes (default: hourly on weekdays)
+  timezone: "UTC"                # timezone for all cron expressions in this file
+
+reminders:
+  every: 7d                      # min gap between reminders to the same person (units: m, h, d, w)
+  working_hours:                 # optional; evaluated in each person's own Slack time zone
+    start: "09:00"
+    end: "17:00"
+    days: [mon, tue, wed, thu, fri]
+
+scope:                           # who the bot looks at at all
+  include_guests: false          # is_restricted / is_ultra_restricted
+  exclude_users: [U01ABCDEF, ceo@example.com]
+  # only_users: [you@example.com]   # pilot mode: only these people
+
+rules:
+  - id: photo
+    field: photo
+    check: required              # for photo: a custom image has been uploaded
+    hint: "Upload a profile photo: click your avatar → Profile → Edit."
+
+  - id: phone
+    field: phone
+    check: phone                 # international number starting with "+"
+    validation: possible         # possible (right length; default) | valid (strict libphonenumber validity)
+    mobile_only: false           # true = reject numbers libphonenumber identifies as landlines
+    strict_e164: false           # true = exactly +<digits>, no spaces
+    hint: "Add your mobile number in international format, e.g. +971 50 123 4567."
+    exclude_users: [U02CONTRACTOR]
+
+  - id: department               # paid plans only
+    custom_field: "Department"   # custom profile field, by its label
+    check: one_of
+    values: [Engineering, Tech, Design, Operations]   # optional for options_list fields
+    hint: "Set your Department to one of: {values}."
+
+admin_report:                    # optional
+  channel: C0123ABCDEF
+  schedule: "0 9 * * 1"          # Mondays 09:00 (schedule.timezone)
+
+messages:                        # optional overrides; defaults ship with the app
+  intro: "Hi {first_name}! A few things are missing from your Slack profile:"
+  footer: "I'll remind you every {every} until it's done."
+  all_done: "✅ All set. Thanks for completing your profile!"

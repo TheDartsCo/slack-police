@@ -1,0 +1,23 @@
+display_information:
+  name: Profile Check
+  description: Checks everyone's Slack profile against your team's rules and politely reminds people what to fix.
+features:
+  app_home:
+    messages_tab_enabled: true
+    messages_tab_read_only_enabled: true
+    home_tab_enabled: false
+  bot_user:
+    display_name: Profile Check
+oauth_config:
+  scopes:
+    bot:
+      - users:read
+      - users:read.email
+      - users.profile:read
+      - chat:write
+      - im:write
+settings:
+  interactivity:
+    is_enabled: true
+  socket_mode_enabled: true
+  org_deploy_enabled: false

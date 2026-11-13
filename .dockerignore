@@ -1,0 +1,10 @@
+node_modules/
+dist/
+data/
+.git/
+.env
+config.yaml
+.superpowers/
+.serena/
+docs/
+tests/
