@@ -31,9 +31,7 @@ export function prepareRules(
 
 		if (rule.custom_field !== undefined) {
 			const label = rule.custom_field.trim();
-			field = fields.find(
-				(f) => f.label.toLowerCase() === label.toLowerCase(),
-			);
+			field = fields.find((f) => f.label.toLowerCase() === label.toLowerCase());
 			if (field === undefined) {
 				problems.push(
 					fields.length === 0

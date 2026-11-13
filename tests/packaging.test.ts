@@ -12,7 +12,7 @@ describe("packaging", () => {
 
 	it("manifest has exactly the documented scopes and Socket Mode", () => {
 		const m = parse(readFileSync("manifest.yaml", "utf8"));
-		expect([...m.oauth_config.scopes.bot].sort()).toEqual([
+		expect([...m.oauth_config.scopes.bot].toSorted()).toEqual([
 			"chat:write",
 			"im:write",
 			"users.profile:read",

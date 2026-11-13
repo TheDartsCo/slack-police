@@ -16,15 +16,14 @@ const failures = [
 
 describe("renderTemplate", () => {
 	it("substitutes known keys and leaves unknown ones", () => {
-		expect(renderTemplate("Hi {first_name}! {unknown}", { first_name: "Sara" })).toBe(
-			"Hi Sara! {unknown}",
-		);
+		expect(
+			renderTemplate("Hi {first_name}! {unknown}", { first_name: "Sara" }),
+		).toBe("Hi Sara! {unknown}");
 	});
 });
 
 describe("escapeText", () => {
-	it("escapes & < >", () =>
-		expect(escapeText("<b>&")).toBe("&lt;b&gt;&amp;"));
+	it("escapes & < >", () => expect(escapeText("<b>&")).toBe("&lt;b&gt;&amp;"));
 });
 
 describe("buildReminder", () => {
@@ -53,7 +52,10 @@ describe("buildReminder", () => {
 			{
 				type: "context",
 				elements: [
-					{ type: "mrkdwn", text: "I'll remind you every 7 days until it's done." },
+					{
+						type: "mrkdwn",
+						text: "I'll remind you every 7 days until it's done.",
+					},
 				],
 			},
 			{
@@ -78,7 +80,9 @@ describe("buildReminder", () => {
 				messages: DEFAULT_MESSAGES,
 				every: "week",
 			}).text,
-		).toBe("Hi &lt;b&gt;&amp;! A few things are missing from your Slack profile:"));
+		).toBe(
+			"Hi &lt;b&gt;&amp;! A few things are missing from your Slack profile:",
+		));
 });
 
 describe("buildStillMissing", () => {
@@ -93,7 +97,10 @@ describe("buildStillMissing", () => {
 			type: "context",
 			elements: [
 				{ type: "mrkdwn", text: "Checked just now" },
-				{ type: "mrkdwn", text: "I'll remind you every 7 days until it's done." },
+				{
+					type: "mrkdwn",
+					text: "I'll remind you every 7 days until it's done.",
+				},
 			],
 		});
 	});

@@ -1,9 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { AppDeps } from "../../src/app/deps.js";
-import {
-	runAdminReport,
-	summarizeCompliance,
-} from "../../src/app/report.js";
+import { runAdminReport, summarizeCompliance } from "../../src/app/report.js";
 import { parseConfigText } from "../../src/config/load.js";
 import { prepareRules } from "../../src/rules/prepare.js";
 import { openStateStore } from "../../src/state/store.js";

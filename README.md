@@ -13,7 +13,7 @@ The bot's display name in Slack is **Profile Check**; the package, CLI and Docke
 
 ## Setup (five steps)
 
-1. **Create the app from the manifest.** Go to [api.slack.com/apps](https://api.slack.com/apps) → *Create app* → *From a manifest*, and paste [`manifest.yaml`](manifest.yaml). You can rename the bot before creating it.
+1. **Create the app from the manifest.** Go to [api.slack.com/apps](https://api.slack.com/apps) → _Create app_ → _From a manifest_, and paste [`manifest.yaml`](manifest.yaml). You can rename the bot before creating it.
 2. **Install it to your workspace**, then create an **app-level token** with the `connections:write` scope (Basic Information → App-Level Tokens).
 3. **Copy the two tokens** into a `.env` file (never into the YAML config):
 
@@ -42,22 +42,22 @@ docker run --rm --env-file .env -v "$PWD/config.yaml:/config/config.yaml:ro" ghc
 
 ### Commands
 
-| Command | What it does |
-|---|---|
-| `start` (default) | Validates the config, connects Socket Mode, runs the schedules, sends reminders. The only command that messages people. |
-| `check` | Read-only report: who fails which rule, right now, ignoring reminder gaps and working hours. Sends nothing, writes no state. |
-| `validate` | Config and Slack resolution checks; exits non-zero on any problem. |
+| Command           | What it does                                                                                                                 |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `start` (default) | Validates the config, connects Socket Mode, runs the schedules, sends reminders. The only command that messages people.      |
+| `check`           | Read-only report: who fails which rule, right now, ignoring reminder gaps and working hours. Sends nothing, writes no state. |
+| `validate`        | Config and Slack resolution checks; exits non-zero on any problem.                                                           |
 
 ### Environment variables
 
-| Variable | Required | Default | Meaning |
-|---|---|---|---|
-| `SLACK_BOT_TOKEN` | yes | — | Bot token (`xoxb-…`). |
-| `SLACK_APP_TOKEN` | for `start` | — | App-level token (`xapp-…`) with `connections:write`. |
-| `CONFIG_PATH` | no | `./config.yaml` (`/config/config.yaml` in Docker) | Path to the YAML config. |
-| `DATA_DIR` | no | `./data` (`/data` in Docker) | Where `state.db` lives. Mount it on a persistent volume. |
-| `LOG_LEVEL` | no | `info` | `debug`, `info`, `warn`, `error`. |
-| `HEALTH_PORT` | no | unset | If set, serves `GET /healthz` on that port. |
+| Variable          | Required    | Default                                           | Meaning                                                  |
+| ----------------- | ----------- | ------------------------------------------------- | -------------------------------------------------------- |
+| `SLACK_BOT_TOKEN` | yes         | —                                                 | Bot token (`xoxb-…`).                                    |
+| `SLACK_APP_TOKEN` | for `start` | —                                                 | App-level token (`xapp-…`) with `connections:write`.     |
+| `CONFIG_PATH`     | no          | `./config.yaml` (`/config/config.yaml` in Docker) | Path to the YAML config.                                 |
+| `DATA_DIR`        | no          | `./data` (`/data` in Docker)                      | Where `state.db` lives. Mount it on a persistent volume. |
+| `LOG_LEVEL`       | no          | `info`                                            | `debug`, `info`, `warn`, `error`.                        |
+| `HEALTH_PORT`     | no          | unset                                             | If set, serves `GET /healthz` on that port.              |
 
 ## Config reference
 
@@ -65,22 +65,22 @@ Unknown keys are errors, and every error names the exact path (e.g. `rules[2].va
 
 ### Top level
 
-| Key | Default | Meaning |
-|---|---|---|
-| `dry_run` | `true` | Log and post the admin summary, but send no DMs to people. The summary is labelled "dry run — nobody was messaged". |
-| `schedule.check` | `"0 * * * 1-5"` | Cron expression for check passes (hourly on weekdays). |
-| `schedule.timezone` | `"UTC"` | Time zone for every cron expression in the file, and the fallback for working hours. |
-| `reminders.every` | `"7d"` | Minimum gap between reminders to the same person. Units: `m`, `h`, `d`, `w` (e.g. `30m`, `12h`, `7d`, `2w`). |
-| `reminders.working_hours` | unset | Optional `{start, end, days}` window, evaluated in each person's own Slack time zone. `start`/`end` are 24-hour `HH:MM`, `start` before `end`; `days` is a list of `mon`…`sun`. The window is `[start, end)`. |
-| `scope.include_guests` | `false` | Include single- and multi-channel guests. |
-| `scope.only_users` | everyone | Pilot mode: only these people (IDs or emails). |
-| `scope.exclude_users` | none | Never check these people (IDs or emails). Exclude wins over only. |
-| `rules` | required | Non-empty list of rules (below). |
-| `admin_report.channel` | unset | Channel **ID** (`C…`), not its name. The bot must be invited. |
-| `admin_report.schedule` | — | Cron for the summary, e.g. `"0 9 * * 1"` (Mondays 09:00). |
-| `messages.intro` | `Hi {first_name}! A few things are missing from your Slack profile:` | DM intro. `{first_name}` is replaced. |
-| `messages.footer` | `I'll remind you every {every} until it's done.` | DM footer. `{every}` is replaced (e.g. "7 days"). |
-| `messages.all_done` | `✅ All set. Thanks for completing your profile!` | Shown when a "Check again" click finds everything fixed. |
+| Key                       | Default                                                              | Meaning                                                                                                                                                                                                       |
+| ------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `dry_run`                 | `true`                                                               | Log and post the admin summary, but send no DMs to people. The summary is labelled "dry run — nobody was messaged".                                                                                           |
+| `schedule.check`          | `"0 * * * 1-5"`                                                      | Cron expression for check passes (hourly on weekdays).                                                                                                                                                        |
+| `schedule.timezone`       | `"UTC"`                                                              | Time zone for every cron expression in the file, and the fallback for working hours.                                                                                                                          |
+| `reminders.every`         | `"7d"`                                                               | Minimum gap between reminders to the same person. Units: `m`, `h`, `d`, `w` (e.g. `30m`, `12h`, `7d`, `2w`).                                                                                                  |
+| `reminders.working_hours` | unset                                                                | Optional `{start, end, days}` window, evaluated in each person's own Slack time zone. `start`/`end` are 24-hour `HH:MM`, `start` before `end`; `days` is a list of `mon`…`sun`. The window is `[start, end)`. |
+| `scope.include_guests`    | `false`                                                              | Include single- and multi-channel guests.                                                                                                                                                                     |
+| `scope.only_users`        | everyone                                                             | Pilot mode: only these people (IDs or emails).                                                                                                                                                                |
+| `scope.exclude_users`     | none                                                                 | Never check these people (IDs or emails). Exclude wins over only.                                                                                                                                             |
+| `rules`                   | required                                                             | Non-empty list of rules (below).                                                                                                                                                                              |
+| `admin_report.channel`    | unset                                                                | Channel **ID** (`C…`), not its name. The bot must be invited.                                                                                                                                                 |
+| `admin_report.schedule`   | —                                                                    | Cron for the summary, e.g. `"0 9 * * 1"` (Mondays 09:00).                                                                                                                                                     |
+| `messages.intro`          | `Hi {first_name}! A few things are missing from your Slack profile:` | DM intro. `{first_name}` is replaced.                                                                                                                                                                         |
+| `messages.footer`         | `I'll remind you every {every} until it's done.`                     | DM footer. `{every}` is replaced (e.g. "7 days").                                                                                                                                                             |
+| `messages.all_done`       | `✅ All set. Thanks for completing your profile!`                    | Shown when a "Check again" click finds everything fixed.                                                                                                                                                      |
 
 ### Rules
 
@@ -90,12 +90,12 @@ Each rule needs a unique `id`, exactly one of `field` / `custom_field`, a `check
 
 **Custom fields** (`custom_field: "Department"`): referenced by label, resolved at startup via `team.profile.get`. Paid Slack plans only. Labels are matched case-insensitively; a missing label is a startup error listing the labels that exist.
 
-| Check | Passes when | Options |
-|---|---|---|
-| `required` | Value is non-empty after trimming. For `photo`: a custom image was uploaded. | — |
-| `phone` | Starts with `+` and parses as a phone number. | `validation`: `possible` (default; right length for the country) or `valid` (strict). `mobile_only` (default `false`): reject numbers identified as landlines; in countries where mobiles can't be distinguished (US/Canada) both are accepted. `strict_e164` (default `false`): require exactly `+<digits>`, no spaces. |
-| `one_of` | Trimmed value is in `values`. | `values` (required for built-in fields; optional for dropdown custom fields — Slack's own options are used then). `case_sensitive` (default `false`). |
-| `regex` | Value matches `pattern`. | `pattern` (a JavaScript regular expression). |
+| Check      | Passes when                                                                  | Options                                                                                                                                                                                                                                                                                                                  |
+| ---------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `required` | Value is non-empty after trimming. For `photo`: a custom image was uploaded. | —                                                                                                                                                                                                                                                                                                                        |
+| `phone`    | Starts with `+` and parses as a phone number.                                | `validation`: `possible` (default; right length for the country) or `valid` (strict). `mobile_only` (default `false`): reject numbers identified as landlines; in countries where mobiles can't be distinguished (US/Canada) both are accepted. `strict_e164` (default `false`): require exactly `+<digits>`, no spaces. |
+| `one_of`   | Trimmed value is in `values`.                                                | `values` (required for built-in fields; optional for dropdown custom fields — Slack's own options are used then). `case_sensitive` (default `false`).                                                                                                                                                                    |
+| `regex`    | Value matches `pattern`.                                                     | `pattern` (a JavaScript regular expression).                                                                                                                                                                                                                                                                             |
 
 `{values}` in a hint expands to the allowed list, e.g. `Set your Department to one of: {values}.`
 
@@ -118,7 +118,7 @@ Yes, for built-in fields. Custom profile fields (like Department) need a paid pl
 Fields synced from an identity provider (Okta, Google, Entra…) usually can't be edited in Slack, so reminding people is pointless. The bot warns at startup when a rule targets a SCIM-synced field.
 
 **How do I find user and channel IDs?**
-User ID: profile → ⋯ → *Copy member ID*. Channel ID: channel name → *View channel details* → bottom of the About tab. The admin channel must be given as an ID (`C…`), and you must invite the bot: `/invite @Profile Check`.
+User ID: profile → ⋯ → _Copy member ID_. Channel ID: channel name → _View channel details_ → bottom of the About tab. The admin channel must be given as an ID (`C…`), and you must invite the bot: `/invite @Profile Check`.
 
 **Why may only one copy run?**
 Reminder state is local to one process. Two copies would each remind people, doubling the DMs. There is no distributed lock by design — deploy one replica.
@@ -134,11 +134,13 @@ The photo rule falls back to `users.profile.get` whenever `users.list` omits `is
 ## Development
 
 ```bash
-npm ci
-npm test          # vitest
-npm run typecheck # tsc --noEmit
-npm run lint      # biome
-npm run build     # dist/
+bun install
+bun run test      # vitest
+bun run typecheck # tsc --noEmit
+bun run lint      # oxlint + oxfmt --check
+bun run format    # oxfmt --write
+bun run build     # dist/
 ```
 
-Node >= 24. Licence: MIT.
+Node >= 24 at runtime; [Bun](https://bun.sh) is the package manager and script runner.
+Linting and formatting use the OXC tools (`oxlint`, `oxfmt`). Licence: MIT.

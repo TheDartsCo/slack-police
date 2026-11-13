@@ -66,9 +66,13 @@ describe("prepareRules", () => {
 
 	it("options_list without values uses possible_values", () => {
 		const f = { ...dept, type: "options_list", possibleValues: ["Eng", "Ops"] };
-		expect(prepareRules([rule({ values: undefined })], [f]).rules[0]?.check).toEqual(
-			{ check: "one_of", values: ["Eng", "Ops"], case_sensitive: false },
-		);
+		expect(
+			prepareRules([rule({ values: undefined })], [f]).rules[0]?.check,
+		).toEqual({
+			check: "one_of",
+			values: ["Eng", "Ops"],
+			case_sensitive: false,
+		});
 	});
 
 	it("warnings: SCIM, hidden, value not an option", () => {

@@ -53,7 +53,10 @@ export async function summarizeCompliance(
 			inScope,
 			complete,
 			incomplete,
-			perRule: rules.map((r) => ({ ruleId: r.id, count: counts.get(r.id) ?? 0 })),
+			perRule: rules.map((r) => ({
+				ruleId: r.id,
+				count: counts.get(r.id) ?? 0,
+			})),
 		},
 		names,
 	};

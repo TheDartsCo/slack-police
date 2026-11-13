@@ -2,13 +2,9 @@ import { describe, expect, it } from "vitest";
 import type { AppDeps } from "../../src/app/deps.js";
 import { runCheckPass } from "../../src/app/pass.js";
 import { parseConfigText } from "../../src/config/load.js";
-import type { Config } from "../../src/config/schema.js";
 import { prepareRules } from "../../src/rules/prepare.js";
 import { openStateStore } from "../../src/state/store.js";
-import {
-	FakeSlackDirectory,
-	makeUser,
-} from "../support/fake-directory.js";
+import { FakeSlackDirectory, makeUser } from "../support/fake-directory.js";
 import { spyLogger } from "../support/spy-logger.js";
 
 const HOUR = 3_600_000;
@@ -95,9 +91,13 @@ reminders:
     end: "17:00"
     days: [mon, tue, wed, thu, fri]
 ${RULES_YAML}`;
-		const { fake, deps } = setup(yaml);
+		const { fake } = setup(yaml);
 		fake.users = [
-			makeUser({ id: "U1", tz: "Asia/Dubai", profile: { hasCustomImage: false } }),
+			makeUser({
+				id: "U1",
+				tz: "Asia/Dubai",
+				profile: { hasCustomImage: false },
+			}),
 		];
 		// Saturday in Dubai
 		const saturday = setup(yaml, fake);
@@ -260,7 +260,9 @@ rules:
 		const { fake, deps, log } = setup(BASE);
 		fake.users = [makeUser({ id: "U1", profile: { hasCustomImage: false } })];
 		await runCheckPass(deps);
-		const lastInfo = [...log.lines].reverse().find((l) => l.level === "info");
+		const lastInfo = [...log.lines]
+			.toReversed()
+			.find((l) => l.level === "info");
 		expect(lastInfo?.msg).toBe("check pass finished");
 		expect(JSON.stringify(log.lines)).not.toContain("+971");
 	});

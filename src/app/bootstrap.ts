@@ -24,6 +24,7 @@ export async function bootstrap(
 	} catch (err) {
 		throw new Error(
 			`Slack rejected SLACK_BOT_TOKEN: ${slackErrorCode(err) ?? "unknown error"}`,
+			{ cause: err },
 		);
 	}
 

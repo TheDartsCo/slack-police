@@ -82,7 +82,7 @@ export class FakeSlackDirectory implements SlackDirectory {
 		const user = this.users.find((u) => u.id === userId);
 		return {
 			hasCustomImage: user?.profile.hasCustomImage,
-			customFields: { ...(this.profiles.get(userId) ?? {}) },
+			customFields: { ...this.profiles.get(userId) },
 		};
 	}
 

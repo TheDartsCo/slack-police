@@ -182,9 +182,11 @@ it.each<[string, string, string | ((p: string) => boolean)]>([
 	["no rules", `rules: []`, "rules: must be a non-empty list"],
 ])("%s", (_, yaml, expected) => {
 	const ps = problems(yaml);
-	typeof expected === "string"
-		? expect(ps).toContain(expected)
-		: expect(ps.some(expected)).toBe(true);
+	if (typeof expected === "string") {
+		expect(ps).toContain(expected);
+	} else {
+		expect(ps.some(expected)).toBe(true);
+	}
 });
 
 it("reports several field problems together", () =>

@@ -48,15 +48,21 @@ describe("fieldValue", () => {
 			displayName: "sara",
 			customFields: { Xf1: "Tech" },
 		};
-		expect(fieldValue(profile, { kind: "builtin", field: "photo" })).toBe(false);
+		expect(fieldValue(profile, { kind: "builtin", field: "photo" })).toBe(
+			false,
+		);
 		expect(fieldValue(profile, { kind: "builtin", field: "phone" })).toBe(
 			"+971501234567",
 		);
-		expect(fieldValue(profile, { kind: "builtin", field: "display_name" })).toBe(
-			"sara",
-		);
 		expect(
-			fieldValue(profile, { kind: "custom", fieldId: "Xf1", label: "Department" }),
+			fieldValue(profile, { kind: "builtin", field: "display_name" }),
+		).toBe("sara");
+		expect(
+			fieldValue(profile, {
+				kind: "custom",
+				fieldId: "Xf1",
+				label: "Department",
+			}),
 		).toBe("Tech");
 		expect(
 			fieldValue(profile, { kind: "custom", fieldId: "Xf9", label: "Missing" }),
@@ -71,7 +77,10 @@ describe("needsProfileFetch", () => {
 	});
 
 	it("photo rule with hasCustomImage undefined → true", () => {
-		const profile = { ...makeUser({ id: "U1" }).profile, hasCustomImage: undefined };
+		const profile = {
+			...makeUser({ id: "U1" }).profile,
+			hasCustomImage: undefined,
+		};
 		expect(needsProfileFetch([photoRule], profile)).toBe(true);
 	});
 

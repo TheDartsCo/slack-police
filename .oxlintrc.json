@@ -1,0 +1,12 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"ignorePatterns": ["dist", "docs", "data"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn"
+	},
+	"rules": {
+		"eslint/no-new": "off",
+		"unicorn/require-post-message-target-origin": "off"
+	}
+}

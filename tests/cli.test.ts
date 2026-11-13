@@ -24,7 +24,11 @@ const GOOD_CONFIG = `rules:
 function io() {
 	const out: string[] = [];
 	const err: string[] = [];
-	return { out, err, io: { out: (s: string) => out.push(s), err: (s: string) => err.push(s) } };
+	return {
+		out,
+		err,
+		io: { out: (s: string) => out.push(s), err: (s: string) => err.push(s) },
+	};
 }
 
 describe("main", () => {
@@ -85,7 +89,12 @@ ${GOOD_CONFIG}`);
 
 	it("missing token", async () => {
 		const { err, io: collector } = io();
-		const code = await main(["validate"], {}, collector, () => new FakeSlackDirectory());
+		const code = await main(
+			["validate"],
+			{},
+			collector,
+			() => new FakeSlackDirectory(),
+		);
 		expect(code).toBe(1);
 		expect(err).toEqual([
 			"error: SLACK_BOT_TOKEN is not set (it starts with xoxb-)",

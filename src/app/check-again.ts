@@ -30,9 +30,7 @@ export function createCheckAgainHandler(
 				? applicableRules(userId, deps.rules, population.ruleScopes)
 				: [];
 		const failures =
-			applicable.length > 0
-				? await assessUser(user, applicable, deps.dir)
-				: [];
+			applicable.length > 0 ? await assessUser(user, applicable, deps.dir) : [];
 
 		if (failures.length === 0) {
 			await deps.dir.updateMessage(

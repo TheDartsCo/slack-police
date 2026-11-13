@@ -1,6 +1,5 @@
 import { join } from "node:path";
 import { App } from "@slack/bolt";
-import { WebClient } from "@slack/web-api";
 import { Cron } from "croner";
 import type { Env } from "../env.js";
 import { startHealthServer } from "../health.js";

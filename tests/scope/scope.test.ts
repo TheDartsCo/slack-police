@@ -32,10 +32,9 @@ describe("inGlobalScope", () => {
 			inGlobalScope(g, false, all),
 			inGlobalScope(sg, false, all),
 		]).toEqual([false, false]);
-		expect([
-			inGlobalScope(g, true, all),
-			inGlobalScope(sg, true, all),
-		]).toEqual([true, true]);
+		expect([inGlobalScope(g, true, all), inGlobalScope(sg, true, all)]).toEqual(
+			[true, true],
+		);
 	});
 });
 

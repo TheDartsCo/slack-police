@@ -3,11 +3,12 @@ WORKDIR /app
 # better-sqlite3 compiles from source when no prebuilt binary matches the platform.
 RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ \
     && rm -rf /var/lib/apt/lists/*
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY --from=oven/bun:1 /usr/local/bin/bun /usr/local/bin/bun
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
 COPY tsconfig.json tsconfig.build.json ./
 COPY src ./src
-RUN npm run build && npm prune --omit=dev
+RUN bun run build && bun install --production --frozen-lockfile
 
 FROM node:24-slim
 ENV NODE_ENV=production DATA_DIR=/data CONFIG_PATH=/config/config.yaml
