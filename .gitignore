@@ -4,3 +4,4 @@ data/
 config.yaml
 .env
 .superpowers/
+.serena/
